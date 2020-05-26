@@ -1,20 +1,20 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\interfaces;
+namespace open20\amos\dashboard\interfaces;
 
 use yii\db\ActiveQuery;
 
 /**
  * Interface CommunityContextInterface
- * @package lispa\amos\community\models
+ * @package open20\amos\community\models
  */
 interface SubDashboardInterface
 {

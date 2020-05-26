@@ -1,25 +1,25 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\controllers;
+namespace open20\amos\dashboard\controllers;
 
-use lispa\amos\dashboard\models\AmosUserDashboards;
-use lispa\amos\dashboard\models\search\AmosUserDashboardsSearch;
-use lispa\amos\dashboard\models\search\AmosWidgetsSearch;
+use open20\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\dashboard\models\search\AmosUserDashboardsSearch;
+use open20\amos\dashboard\models\search\AmosWidgetsSearch;
 use Yii;
 use yii\base\Module;
 use yii\db\ActiveQuery;
 
 /**
  * Class TabDashboardControllerTrait
- * @package lispa\amos\dashboard\controllers
+ * @package open20\amos\dashboard\controllers
  */
 trait TabDashboardControllerTrait
 {

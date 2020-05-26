@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\components;
+namespace open20\amos\dashboard\components;
 
 use yii\i18n\MissingTranslationEvent;
 

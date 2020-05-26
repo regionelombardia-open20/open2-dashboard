@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\basic\template
+ * @package    open20\amos\basic\template
  * @category   CategoryName
  */
 
@@ -14,13 +14,13 @@ use yii\db\Schema;
 /**
  * Default migration for the relations of the Application Project
  */
-class m181107_174018_widget_management_permission extends \lispa\amos\core\migration\AmosMigrationPermissions {
+class m181107_174018_widget_management_permission extends \open20\amos\core\migration\AmosMigrationPermissions {
 
     protected function setAuthorizations()
     {
         $this->authorizations = [
             [
-                'name' => \lispa\amos\dashboard\widgets\icons\WidgetIconManagement::className(),
+                'name' => \open20\amos\dashboard\widgets\icons\WidgetIconManagement::className(),
                 'type' => \yii\rbac\Permission::TYPE_PERMISSION,
                 'description' => 'Permission invitation frontend',
                 'ruleName' => null,

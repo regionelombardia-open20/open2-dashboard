@@ -1,19 +1,19 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\controllers\base;
+namespace open20\amos\dashboard\controllers\base;
 
-use lispa\amos\core\controllers\AmosController;
-use lispa\amos\dashboard\models\AmosUserDashboards;
-use lispa\amos\dashboard\models\search\AmosUserDashboardsSearch;
-use lispa\amos\dashboard\models\search\AmosWidgetsSearch;
+use open20\amos\core\controllers\AmosController;
+use open20\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\dashboard\models\search\AmosUserDashboardsSearch;
+use open20\amos\dashboard\models\search\AmosWidgetsSearch;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\filters\AccessControl;
@@ -23,7 +23,7 @@ use yii\web\Controller;
 
 /**
  * Class DashboardController
- * @package lispa\amos\dashboard\controllers\base
+ * @package open20\amos\dashboard\controllers\base
  */
 class DashboardController extends AmosController
 {
@@ -53,6 +53,7 @@ class DashboardController extends AmosController
     public function init()
     {
         parent::init();
+
         $this->setUpLayout();
         $AmosUserDashboardsSearch = new AmosUserDashboardsSearch();
         $params                   = [
@@ -67,17 +68,22 @@ class DashboardController extends AmosController
             $Dashboard = new AmosUserDashboards($params);
             $Dashboard->save();
         }
+
         $this->setCurrentDashboard($Dashboard);
 
         if (Yii::$app->getModule('dashboard')->initIfEmpty) {
             $this->initEmptyDashboard();
         }
+
         if (Yii::$app->getModule('dashboard')->refreshWidgets) {
             $this->refreshDashboard();
             $this->updateDashboardDate();
         }
     }
 
+    /**
+     *
+     */
     protected function updateDashboardDate()
     {
         $CurrentDashboard             = $this->getCurrentDashboard();
@@ -101,6 +107,9 @@ class DashboardController extends AmosController
         $this->slide = $slide;
     }
 
+    /**
+     * 
+     */
     protected function initEmptyDashboard()
     {
         /** @var ActiveQuery $amosWidgetsQuery */
@@ -114,6 +123,9 @@ class DashboardController extends AmosController
         }
     }
 
+    /**
+     *
+     */
     protected function refreshDashboard()
     {
         /** @var ActiveQuery $amosWidgetsQuery */
@@ -125,6 +137,10 @@ class DashboardController extends AmosController
         $this->updateUserWidgets($widgets);
     }
 
+    /**
+     *
+     * @return type
+     */
     protected function getDashboardWidgets()
     {
         /** @var ActiveQuery $amosWidgetsQuery */
@@ -132,24 +148,34 @@ class DashboardController extends AmosController
         if (Yii::$app->getModule('dashboard')->initAllWidgets) {
             $AmosWidgetsQuery = $this->getAllWidgets();
         }
+
         if (Yii::$app->getModule('dashboard')->initHierarchyWidgets) {
             $AmosWidgetsQuery = $this->getHierarchyWidgets();
         } else if (Yii::$app->getModule('dashboard')->initChildWidget) {
             $AmosWidgetsQuery = $this->getChildWidget();
         }
+
         return $AmosWidgetsQuery;
     }
 
+    /**
+     *
+     */
     protected function setUserWidgets($widgets)
     {
         $CurrentDashboard = $this->getCurrentDashboard();
-        $order            = [];
+        $orderGr          = [];
+        $orderIc          = [];
         if (!empty($widgets) && is_array($widgets)) {
             foreach ($widgets as $widget) {
-                $widgetOrder = $this->getOrder($widget->default_order, $order);
-                $order[]     = $widgetOrder;
+                if ($widget->type == \open20\amos\dashboard\models\AmosWidgets::TYPE_GRAPHIC) {
+                    $widgetOrder = $this->getOrder($widget->default_order, $orderGr);
+                    $orderGr[]   = $widgetOrder;
+                } else {
+                    $widgetOrder = $this->getOrder($widget->default_order, $orderIc);
+                    $orderIc[]   = $widgetOrder;
+                }
 
-                /** @var AmosWidgetsSearch $widget */
                 $CurrentDashboard->link('amosWidgetsClassnames', $widget,
                     [
                     'amos_widgets_id' => $widget['id'],
@@ -159,6 +185,9 @@ class DashboardController extends AmosController
         }
     }
 
+    /**
+     * 
+     */
     protected function getMaxOrderWidget()
     {
         $widgetOrderMax = $this->getCurrentDashboard()->getAmosUserDashboardsWidgetMms()->orderBy('order DESC')->one();
@@ -166,9 +195,13 @@ class DashboardController extends AmosController
         if ($widgetOrderMax) {
             $order = $widgetOrderMax->order;
         }
+
         return $order;
     }
 
+    /**
+     * 
+     */
     protected function updateUserWidgets($widgets)
     {
         $CurrentDashboard = $this->getCurrentDashboard();
@@ -197,6 +230,9 @@ class DashboardController extends AmosController
         }
     }
 
+    /**
+     * 
+     */
     protected function getAllWidgets()
     {
         /** @var ActiveQuery $amosWidgetsQuery */
@@ -214,9 +250,14 @@ class DashboardController extends AmosController
                 ]
             );
         }
+
         return $AmosWidgetsQuery;
     }
 
+    /**
+     *
+     * @return type
+     */
     protected function getHierarchyWidgets()
     {
         /** @var ActiveQuery $amosWidgetsQuery */
@@ -241,9 +282,14 @@ class DashboardController extends AmosController
                 ]
             );
         }
+
         return $AmosWidgetsQuery;
     }
 
+    /**
+     *
+     * @return type
+     */
     protected function getChildWidget()
     {
         /** @var ActiveQuery $amosWidgetsQuery */
@@ -286,25 +332,30 @@ class DashboardController extends AmosController
         $this->currentDashboard = $currentDashboard;
     }
 
+    /**
+     *
+     * @return type
+     */
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['save-dashboard-order', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
+        return ArrayHelper::merge(parent::behaviors(),
+                [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'actions' => ['save-dashboard-order', 'index'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'logout' => ['post'],
+                    ],
                 ],
-            ],
         ]);
     }
 
@@ -337,13 +388,14 @@ class DashboardController extends AmosController
             return true;
         }
         $this->layout = (!empty($layout)) ? $layout : $this->layout;
-        $module = \Yii::$app->getModule('layout');
+        $module       = \Yii::$app->getModule('layout');
         if (empty($module)) {
             if (strpos($this->layout, '@') === false) {
-                $this->layout = '@vendor/lispa/amos-core/views/layouts/'.(!empty($layout) ? $layout : $this->layout);
+                $this->layout = '@vendor/open20/amos-core/views/layouts/'.(!empty($layout) ? $layout : $this->layout);
             }
-            return true;
+            // return true;
         }
+
         return true;
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models;
+namespace open20\amos\dashboard\models;
 
 /**
  * This is the model class for table "amos_user_dashboards_widget_mm".

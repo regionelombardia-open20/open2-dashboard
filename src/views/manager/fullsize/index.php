@@ -34,8 +34,10 @@ if ($currentDashboard->module != 'dashboard') {
 
 $this->params['breadcrumbs'][]  = $this->title;
 $this->params['widgetSelected'] = $widgetSelected;
+
+\open20\amos\dashboard\assets\DashboardFullsizeAsset::register($this);
 ?>
-<div class="dashboard-default-index">
+<div class="dashboard-default-index dashboard-manager">
 
     <?php $form                           = ActiveForm::begin(); ?>
 
@@ -121,7 +123,7 @@ $this->params['widgetSelected'] = $widgetSelected;
             'iconView' => [
                 'itemView' => '_icon',
                 'itemOptions' => [
-                    'class' => 'col-xs-12 col-sm-6 col-md-2 col-lg-2 flex-column-item'
+                    'class' => 'col-xs-12 col-sm-3 col-md-4 col-lg-2 flex-column-item'
                 ],
             ],
         ]);

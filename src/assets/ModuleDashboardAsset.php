@@ -1,20 +1,20 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\assets;
+namespace open20\amos\dashboard\assets;
 
 use yii\web\AssetBundle;
 
 class ModuleDashboardAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/lispa/amos-dashboard/src/assets/web';
+    public $sourcePath = '@vendor/open20/amos-dashboard/src/assets/web';
     public $css        = [
         'less/dashboard.less'
     ];
@@ -30,13 +30,13 @@ class ModuleDashboardAsset extends AssetBundle
         $moduleL = \Yii::$app->getModule('layout');
         if(!empty($moduleL))
         {
-            $this->depends [] = 'lispa\amos\layout\assets\BaseAsset';
-            $this->depends [] = 'lispa\amos\layout\assets\IsotopeAsset';
+            $this->depends [] = 'open20\amos\layout\assets\BaseAsset';
+            $this->depends [] = 'open20\amos\layout\assets\IsotopeAsset';
         }
         else
         {
-            $this->depends [] = 'lispa\amos\core\views\assets\AmosCoreAsset';
-            $this->depends [] = 'lispa\amos\core\views\assets\IsotopeAsset';
+            $this->depends [] = 'open20\amos\core\views\assets\AmosCoreAsset';
+            $this->depends [] = 'open20\amos\core\views\assets\IsotopeAsset';
         }
         parent::init();
     }

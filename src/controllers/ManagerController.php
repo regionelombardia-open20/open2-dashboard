@@ -1,23 +1,23 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\controllers;
+namespace open20\amos\dashboard\controllers;
 
-use lispa\amos\core\controllers\CrudController;
-use lispa\amos\core\helpers\Html;
-use lispa\amos\core\icons\AmosIcons;
-use lispa\amos\dashboard\AmosDashboard;
-use lispa\amos\dashboard\models\AmosUserDashboards;
-use lispa\amos\dashboard\models\AmosWidgets;
-use lispa\amos\dashboard\models\search\AmosWidgetsSearch;
-use lispa\amos\dashboard\assets\ModuleDashboardAsset;
+use open20\amos\core\controllers\CrudController;
+use open20\amos\core\helpers\Html;
+use open20\amos\core\icons\AmosIcons;
+use open20\amos\dashboard\AmosDashboard;
+use open20\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\dashboard\models\AmosWidgets;
+use open20\amos\dashboard\models\search\AmosWidgetsSearch;
+use open20\amos\dashboard\assets\ModuleDashboardAsset;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -26,6 +26,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use open20\amos\core\widget\WidgetAbstract;
 
 class ManagerController extends CrudController
 {
@@ -72,7 +73,13 @@ class ManagerController extends CrudController
         ]);
 
         parent::init();
+
+        if(!empty(\Yii::$app->params['dashboardEngine']) && \Yii::$app->params['dashboardEngine'] == WidgetAbstract::ENGINE_ROWS) {
+            $this->view->pluginIcon = 'dash dash-dashboard';
+        }
+
         $this->setUpLayout();
+
     }
 
     /**
@@ -117,14 +124,20 @@ class ManagerController extends CrudController
             $userDashboard->unlinkAll('amosWidgetsClassnames', true);
             $newDashboard = Yii::$app->getRequest()->post('amosWidgetsClassnames');
 
+            $tmp = [];
             foreach ($newDashboard as $k => $classname) {
                 $widget = AmosWidgets::findOne(['classname' => $classname, 'sub_dashboard' => 0]);
-                if (!empty($widget->id)) {
-                    $userDashboard->link('amosWidgetsClassnames', $widget,
+                
+                if ((!empty($widget->id) && !(isset($tmp[$classname])))) {
+                    $tmp[$classname] = $classname;
+                    $userDashboard->link(
+                        'amosWidgetsClassnames',
+                        $widget,
                         [
-                        'amos_widgets_id' => $widget->id,
-                        'order' => $userDashboard->getMaxOrder() + 1
-                    ]);
+                            'amos_widgets_id' => $widget->id,
+                            'order' => $userDashboard->getMaxOrder() + 2
+                        ]
+                    );
                 }
             }
 
@@ -255,7 +268,7 @@ class ManagerController extends CrudController
         $module = \Yii::$app->getModule('layout');
         if (empty($module)) {
             if (strpos($this->layout, '@') === false) {
-                $this->layout = '@vendor/lispa/amos-core/views/layouts/'.(!empty($layout) ? $layout : $this->layout);
+                $this->layout = '@vendor/open20/amos-core/views/layouts/'.(!empty($layout) ? $layout : $this->layout);
             }
             return true;
         }

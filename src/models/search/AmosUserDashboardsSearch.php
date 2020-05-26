@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models\search;
+namespace open20\amos\dashboard\models\search;
 
-use lispa\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\dashboard\models\AmosUserDashboards;
 use yii\db\ActiveQuery;
 
 /**
- * AmosUserDashboardsSearch represents the model behind the search form about `lispa\amos\dashboard\models\AmosUserDashboards`.
+ * AmosUserDashboardsSearch represents the model behind the search form about `open20\amos\dashboard\models\AmosUserDashboards`.
  */
 class AmosUserDashboardsSearch extends AmosUserDashboards
 {

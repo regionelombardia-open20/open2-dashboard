@@ -11,3 +11,10 @@ $('.open-modal-dashboard').click(function (event) {
         $('#modal-2liv-dashboard').modal('show');
     })
 });
+
+$(document).on('show.bs.modal', function(data) {
+    const $target = $(data.target);
+    if($target.siblings('.btn-join-community').length) {
+        $('body').append($target);
+    }
+});

@@ -1,14 +1,14 @@
 {
-  "name": "lispa/amos-dashboard",
+  "name": "open20/amos-dashboard",
   "description": "Gestione Dashboard - plugin",
   "keywords": [
     "amos",
     "dashboard",
     "yii2"
   ],
-  "homepage": "http://www.lispa.it/",
+  "homepage": "http://www.open20.it/",
   "type": "component",
-  "proscription": "BSD-3-Clause",
+  "license": "BSD-3-Clause",
   "support": {
     "issues": "https://github.com/yiisoft/yii2/issues?state=open",
     "forum": "http://www.yiiframework.com/forum/",
@@ -18,7 +18,7 @@
   },
   "require": {
     "php": ">=5.4.0",
-    "lispa/amos-core" : "*"
+    "open20/amos-core":"^1.9.60"
   },
   "config": {
     "process-timeout": 1800,
@@ -26,7 +26,7 @@
   },
   "autoload": {
     "psr-4": {
-      "lispa\\amos\\dashboard\\": "src"
+      "open20\\amos\\dashboard\\": "src"
     }
   }
 }

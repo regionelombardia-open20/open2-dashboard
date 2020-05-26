@@ -1,23 +1,23 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\controllers;
+namespace open20\amos\dashboard\controllers;
 
-use lispa\amos\core\controllers\BaseController;
-use lispa\amos\core\helpers\Html;
-use lispa\amos\core\icons\AmosIcons;
-use lispa\amos\dashboard\AmosDashboard;
-use lispa\amos\dashboard\models\AmosUserDashboards;
-use lispa\amos\dashboard\models\AmosWidgets;
-use lispa\amos\dashboard\models\search\AmosWidgetsSearch;
-use lispa\amos\dashboard\assets\ModuleDashboardAsset;
+use open20\amos\core\controllers\BaseController;
+use open20\amos\core\helpers\Html;
+use open20\amos\core\icons\AmosIcons;
+use open20\amos\dashboard\AmosDashboard;
+use open20\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\dashboard\models\AmosWidgets;
+use open20\amos\dashboard\models\search\AmosWidgetsSearch;
+use open20\amos\dashboard\assets\ModuleDashboardAsset;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -147,7 +147,13 @@ class SubDashboardController extends BaseController
      */
     private function saveSubDashboardConfig($module, $widgets)
     {
-        $delete = AmosWidgets::find()->andWhere(['module' => $module, 'sub_dashboard' => 1]);
+        $delete = AmosWidgets::find()
+            ->andWhere(['module' => $module, 'sub_dashboard' => 1]);
+        $moduleCommunity = \Yii::$app->getModule('community');
+        if($moduleCommunity){
+            $delete->leftJoin('community_amos_widgets_mm', 'amos_widgets.id = community_amos_widgets_mm.amos_widgets_id')
+                ->andWhere(['community_id' => null]);
+        }
 
         foreach ($delete->all() as $d) {
             $d->delete();

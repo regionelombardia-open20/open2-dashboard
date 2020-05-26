@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models\base;
+namespace open20\amos\dashboard\models\base;
 
-use lispa\amos\core\record\AmosRecordAudit;
-use lispa\amos\dashboard\AmosDashboard;
+use open20\amos\core\record\AmosRecordAudit;
+use open20\amos\dashboard\AmosDashboard;
 use yii\helpers\ArrayHelper;
 
 /**

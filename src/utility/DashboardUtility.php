@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard\utility
+ * @package    open20\amos\dashboard\utility
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\utility;
+namespace open20\amos\dashboard\utility;
 
-use lispa\amos\dashboard\models\AmosUserDashboards;
-use lispa\amos\dashboard\models\AmosUserDashboardsWidgetMm;
-use yii\base\Object;
+use open20\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\dashboard\models\AmosUserDashboardsWidgetMm;
+use yii\base\BaseObject;
 use yii\db\Query;
 use yii\log\Logger;
 
 /**
  * Class DashboardUtility
- * @package lispa\amos\dashboard\utility
+ * @package open20\amos\dashboard\utility
  */
-class DashboardUtility extends Object
+class DashboardUtility extends BaseObject
 {
     /**
      * This method reset all dashboards by module. You can specify a user ID

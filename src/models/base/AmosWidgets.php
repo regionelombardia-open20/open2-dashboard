@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models\base;
+namespace open20\amos\dashboard\models\base;
 
-use lispa\amos\core\record\AmosRecordAudit;
-use lispa\amos\dashboard\AmosDashboard;
+use open20\amos\core\record\AmosRecordAudit;
+use open20\amos\dashboard\AmosDashboard;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -35,12 +35,12 @@ use yii\helpers\ArrayHelper;
  * @property integer $deleted_by
  * @property string $deleted_at
  *
- * @property \lispa\amos\dashboard\models\AmosUserDashboardsWidgetMm[] $amosUserDashboardsWidgetMms
- * @property \lispa\amos\dashboard\models\AmosUserDashboards[] $amosUserDashboards
+ * @property \open20\amos\dashboard\models\AmosUserDashboardsWidgetMm[] $amosUserDashboardsWidgetMms
+ * @property \open20\amos\dashboard\models\AmosUserDashboards[] $amosUserDashboards
  *
- * @package lispa\amos\dashboard\models\base
+ * @package open20\amos\dashboard\models\base
  */
-class AmosWidgets extends \lispa\amos\notificationmanager\record\NotifyAuditRecord
+class AmosWidgets extends \open20\amos\notificationmanager\record\NotifyAuditRecord
 {
     /**
      * @inheritdoc
@@ -91,7 +91,7 @@ class AmosWidgets extends \lispa\amos\notificationmanager\record\NotifyAuditReco
      */
     public function getAmosUserDashboardsWidgetMms()
     {
-        return $this->hasMany(\lispa\amos\dashboard\models\AmosUserDashboardsWidgetMm::className(), [/*'amos_widgets_classname' => 'classname',*/ 'amos_widgets_id' => 'id']);
+        return $this->hasMany(\open20\amos\dashboard\models\AmosUserDashboardsWidgetMm::className(), [/*'amos_widgets_classname' => 'classname',*/ 'amos_widgets_id' => 'id']);
     }
 
     /**
@@ -99,6 +99,6 @@ class AmosWidgets extends \lispa\amos\notificationmanager\record\NotifyAuditReco
      */
     public function getAmosUserDashboards()
     {
-        return $this->hasMany(\lispa\amos\dashboard\models\AmosUserDashboards::className(), ['id' => 'amos_user_dashboards_id'])->viaTable('amos_user_dashboards_widget_mm', [/*'amos_widgets_classname' => 'classname',*/ 'amos_widgets_id' => 'id']);
+        return $this->hasMany(\open20\amos\dashboard\models\AmosUserDashboards::className(), ['id' => 'amos_user_dashboards_id'])->viaTable('amos_user_dashboards_widget_mm', [/*'amos_widgets_classname' => 'classname',*/ 'amos_widgets_id' => 'id']);
     }
 }

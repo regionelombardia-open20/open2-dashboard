@@ -1,16 +1,16 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models\search;
+namespace open20\amos\dashboard\models\search;
 
-use lispa\amos\dashboard\models\AmosWidgets;
+use open20\amos\dashboard\models\AmosWidgets;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
 
@@ -24,18 +24,36 @@ class AmosWidgetsSearch extends AmosWidgets
      * @param type $forceAll
      * @return ActiveQuery
      */
-    public static function selectableIcon($subDashboard = 0, $module = null, $forceAll = false)
+    public static function selectableIcon($subDashboard = 0, $module = null, $forceAll = false, $configureCommunityDashboard = false)
     {
-        $selectable = self::selectable()->andWhere([
-            'type' => AmosWidgets::TYPE_ICON,
-            'sub_dashboard' => $subDashboard,
-        ]);
-        if ($module !== null) {
-            $selectable = $selectable->andWhere(['module' => $module]);
+        $count = 0;
+        if(\Yii::$app->getModule('community') && !$configureCommunityDashboard){
+            $moduleCwh = \Yii::$app->getModule('cwh');
+            if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
+                $scope = $moduleCwh->getCwhScope();
+                if (isset($scope['community'])) {
+                    $count = \open20\amos\community\models\CommunityAmosWidgetsMm::find()->andWhere(['community_id' => $scope['community']])->count();
+                }
+            }
         }
-        if($forceAll == false){
-            $selectable = $selectable->andWhere(['dashboard_visible' => 1]);
+
+        $selectable = self::selectable()
+            ->andWhere(['type' => AmosWidgets::TYPE_ICON]);
+        if($count > 0){
+            $selectable
+                ->innerJoin('community_amos_widgets_mm', 'amos_widgets.id = community_amos_widgets_mm.amos_widgets_id')
+                ->andWhere(['community_id' => $scope['community']]);
+        }else {
+            $selectable->andWhere(['sub_dashboard' => $subDashboard]);
+            if ($module !== null) {
+                $selectable = $selectable->andWhere(['module' => $module]);
+            }
+            if($forceAll == false){
+                $selectable = $selectable->andWhere(['dashboard_visible' => 1]);
+            }
         }
+
+
         $selectable->orderBy('default_order ASC');
         return $selectable;
     }
@@ -109,19 +127,36 @@ class AmosWidgetsSearch extends AmosWidgets
      * @param type $forceAll
      * @return ActiveQuery
     */
-    public static function selectableGraphic($subDashboard = 0, $module = null, $forceAll = false)
+    public static function selectableGraphic($subDashboard = 0, $module = null, $forceAll = false, $configureCommunityDashboard = false)
     {
-        $selectable = self::selectable()->andWhere([
-            'type' => AmosWidgets::TYPE_GRAPHIC,
-            'sub_dashboard' => $subDashboard,
-        ]);
+        $count = 0;
+        if(\Yii::$app->getModule('community') && !$configureCommunityDashboard){
+            $moduleCwh = \Yii::$app->getModule('cwh');
+            if (isset($moduleCwh) && !empty($moduleCwh->getCwhScope())) {
+                $scope = $moduleCwh->getCwhScope();
+                if (isset($scope['community'])) {
+                    $count = \open20\amos\community\models\CommunityAmosWidgetsMm::find()
+                        ->andWhere(['community_id' => $scope['community']])->count();
+                }
+            }
+        }
 
-        if ($module !== null) {
-            $selectable = $selectable->andWhere(['module' => $module]);
+        $selectable = self::selectable()
+            ->andWhere(['type' => AmosWidgets::TYPE_GRAPHIC]);
+        if($count > 0){
+            $selectable
+                ->innerJoin('community_amos_widgets_mm', 'amos_widgets.id = community_amos_widgets_mm.amos_widgets_id')
+                ->andWhere(['community_id' => $scope['community']]);
+        }else {
+            $selectable->andWhere(['sub_dashboard' => $subDashboard]);
+            if ($module !== null) {
+                $selectable = $selectable->andWhere(['module' => $module]);
+            }
+            if((\Yii::$app->getModule('dashboard')->useWidgetGraphicDashboardVisible == true) && ($forceAll == false)){
+                $selectable = $selectable->andWhere(['dashboard_visible' => 1]);
+            }
         }
-        if((\Yii::$app->getModule('dashboard')->useWidgetGraphicDashboardVisible == true) && ($forceAll == false)){
-           $selectable = $selectable->andWhere(['dashboard_visible' => 1]);
-        }
+        
         $selectable->orderBy('default_order');
         return $selectable;
     }

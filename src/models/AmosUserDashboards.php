@@ -1,14 +1,14 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models;
+namespace open20\amos\dashboard\models;
 
 use yii\db\Exception;
 use yii\db\Query;
@@ -19,7 +19,7 @@ use yii\db\Query;
  * @property AmosWidgets[] $amosWidgetsSelectedIcon
  * @property AmosWidgets[] $amosWidgetsSelectedGraphic
  */
-class AmosUserDashboards extends \lispa\amos\dashboard\models\base\AmosUserDashboards
+class AmosUserDashboards extends \open20\amos\dashboard\models\base\AmosUserDashboards
 {
 
     public $showAllModule = false;

@@ -1,8 +1,16 @@
 <?php
 
-use lispa\amos\dashboard\AmosDashboard;
-use lispa\amos\core\helpers\Html;
-use lispa\amos\core\icons\AmosIcons;
+/**
+ * Aria S.p.A.
+ * OPEN 2.0
+ *
+ *
+ * @package    Open20Package
+ * @category   CategoryName
+ */
+use open20\amos\dashboard\AmosDashboard;
+use open20\amos\core\helpers\Html;
+use open20\amos\core\icons\AmosIcons;
 ?>
 
 <div class="card-widget">
@@ -10,10 +18,12 @@ use lispa\amos\core\icons\AmosIcons;
         <label for="<?=\yii\helpers\StringHelper::basename($model['classname']);?>" class="sr-only"><?= Yii::createObject($model['classname'])->getDescription(); ?></label>
         <input id="<?=\yii\helpers\StringHelper::basename($model['classname']);?>" type="checkbox" name="amosWidgetsClassnames[]" value="<?=$model['classname'];?>" <?= (in_array($model['classname'], $this->params['widgetSelected'])? 'checked' : '') ?> />
     </div>
-    <?php
-        $object = \Yii::createObject($model['classname']);
-        $object->setUrl('');
-    ?>
-    <?= $object->run(); ?>
+    <div class="dashboard-item">
+        <?php
+            $object = \Yii::createObject($model['classname']);
+            $object->setUrl('');
+        ?>
+        <?= $object->run(); ?>
+    </div>
     <p><?= Yii::createObject($model['classname'])->getDescription(); ?></p>
 </div>

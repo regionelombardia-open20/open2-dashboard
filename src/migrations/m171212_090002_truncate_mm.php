@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
@@ -31,6 +31,7 @@ class m171212_090002_truncate_mm extends Migration
 
     /**
      * Use this instead of function up().
+     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -48,6 +49,7 @@ class m171212_090002_truncate_mm extends Migration
 
     /**
      * Use this instead of function down().
+     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {

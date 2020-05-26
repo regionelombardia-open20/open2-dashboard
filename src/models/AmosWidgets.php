@@ -1,17 +1,17 @@
 <?php
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\models;
+namespace open20\amos\dashboard\models;
 
-use lispa\amos\dashboard\models\base\AmosWidgets as BaseAmosWidgets;
-use lispa\amos\dashboard\AmosDashboard;
+use open20\amos\dashboard\models\base\AmosWidgets as BaseAmosWidgets;
+use open20\amos\dashboard\AmosDashboard;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -53,7 +53,7 @@ class AmosWidgets extends BaseAmosWidgets
     public function getChildrens()
     {
         return $this->hasMany(
-                \lispa\amos\dashboard\models\AmosWidgets::className(), ['child_of' => 'classname']
+                \open20\amos\dashboard\models\AmosWidgets::className(), ['child_of' => 'classname']
         );
     }
 
@@ -63,7 +63,7 @@ class AmosWidgets extends BaseAmosWidgets
     public function getFather()
     {
         return $this->hasOne(
-                \lispa\amos\dashboard\models\AmosWidgets::className(), ['classname' => 'child_of']
+                \open20\amos\dashboard\models\AmosWidgets::className(), ['classname' => 'child_of']
         );
     }
 }

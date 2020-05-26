@@ -1,27 +1,26 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard\controllers
+ * @package    open20\amos\dashboard\controllers
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\controllers;
+namespace open20\amos\dashboard\controllers;
 
-use lispa\amos\core\helpers\BreadcrumbHelper;
-use lispa\amos\dashboard\controllers\base\DashboardController;
-use lispa\amos\dashboard\models\AmosUserDashboards;
+use open20\amos\core\helpers\BreadcrumbHelper;
+use open20\amos\dashboard\controllers\base\DashboardController;
+use open20\amos\dashboard\models\AmosUserDashboards;
 use yii\helpers\Url;
 
 /**
  * Class DefaultController
- * @package lispa\amos\dashboard\controllers
+ * @package open20\amos\dashboard\controllers
  */
-class AjaxController extends DashboardController
-{
+class AjaxController extends DashboardController {
 
     /**
      * @inheritdoc
@@ -30,14 +29,12 @@ class AjaxController extends DashboardController
 
         parent::init();
         $this->setUpLayout();
-   
     }
 
     /**
      * @return string
      */
-    public function actionIndex($module, $parent = null)
-    {
+    public function actionIndex($module, $parent = null) {
         $this->setUpLayout('dashboard');
         Url::remember();
 
@@ -50,9 +47,8 @@ class AjaxController extends DashboardController
             'widgetParentClassname' => $parent,
             'currentDashboard' => $currentDashboard
         ];
-        
+
         return $this->renderPartial('index', $params);
     }
-     
-     
+
 }

@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Lombardia Informatica S.p.A.
+ * Aria S.p.A.
  * OPEN 2.0
  *
  *
- * @package    lispa\amos\dashboard
+ * @package    open20\amos\dashboard
  * @category   CategoryName
  */
 
-namespace lispa\amos\dashboard\commands;
+namespace open20\amos\dashboard\commands;
 
-use lispa\amos\core\module\Module;
-use lispa\amos\core\module\ModuleInterface;
-use lispa\amos\dashboard\models\AmosWidgets;
+use open20\amos\core\module\Module;
+use open20\amos\core\module\ModuleInterface;
+use open20\amos\dashboard\models\AmosWidgets;
 use Yii;
 
 class DashboardController extends \yii\console\Controller
