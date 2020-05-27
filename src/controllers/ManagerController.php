@@ -98,7 +98,7 @@ class ManagerController extends CrudController
                                 'save-dashboard-order',
                                 'index'
                             ],
-                            'roles' => ['@']
+                            'roles' => ['CAN_MANAGE_DASHBOARD']
                         ],
                     ]
                 ],

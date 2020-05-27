@@ -53,7 +53,6 @@ class AmosWidgetsSearch extends AmosWidgets
             }
         }
 
-
         $selectable->orderBy('default_order ASC');
         return $selectable;
     }
