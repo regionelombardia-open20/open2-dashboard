@@ -31,7 +31,6 @@ class m171212_090000_alter_table_amos_widgets_mm extends Migration
 
     /**
      * Use this instead of function up().
-     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -47,7 +46,6 @@ class m171212_090000_alter_table_amos_widgets_mm extends Migration
 
     /**
      * Use this instead of function down().
-     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {

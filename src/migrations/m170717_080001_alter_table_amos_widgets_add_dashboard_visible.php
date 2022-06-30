@@ -31,7 +31,6 @@ class m170717_080001_alter_table_amos_widgets_add_dashboard_visible extends Migr
 
     /**
      * Use this instead of function up().
-     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -50,7 +49,6 @@ class m170717_080001_alter_table_amos_widgets_add_dashboard_visible extends Migr
 
     /**
      * Use this instead of function down().
-     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {

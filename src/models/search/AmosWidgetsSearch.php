@@ -207,4 +207,14 @@ class AmosWidgetsSearch extends AmosWidgets
 
         return $dataProvider;
     }
+
+//    public static function getAllFatherWidgets(){
+//        $ret = parent::find()
+//            ->andWhere([
+//                'status' => AmosWidgets::STATUS_ENABLED,
+//              ['is not', 'child_of', null],
+//            ]);
+//
+//        return $ret;
+//    }
 }

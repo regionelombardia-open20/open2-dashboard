@@ -68,6 +68,13 @@ class DashboardWidget extends Widget
      */
     protected function getHtml()
     {
+        $moduleCwh = \Yii::$app->getModule('cwh');
+        if (!is_null($moduleCwh)) {
+            /** @var \open20\amos\cwh\AmosCwh $moduleCwh */
+            // Set new cwh scope
+            $moduleCwh->resetCwhScopeInSession();
+        }
+
         $moduleL = \Yii::$app->getModule('layout');
         $layoutModuleSet = isset($moduleL);
         $showWidgetsGraphic = [];

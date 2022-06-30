@@ -16,6 +16,7 @@ use open20\amos\emailmanager\AmosEmail;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use open20\amos\dashboard\AmosDashboard;
+use open20\amos\core\utilities\ModalUtility;
 
 AmosIcons::map($this);
 
@@ -127,3 +128,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         </div>
     </div>
 </div>
+
+<!-- MODAL DASHBOARD 2 LEVEL -->
+<?= ModalUtility::amosModal([
+    'id' => 'modal-2liv-dashboard',
+    'containerOptions' => ['class' => 'modal-utility modal-dashboard-2level'],
+]);
+?>

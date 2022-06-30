@@ -76,8 +76,10 @@ class DashboardController extends AmosController
         }
 
         if (Yii::$app->getModule('dashboard')->refreshWidgets) {
-            $this->refreshDashboard();
-            $this->updateDashboardDate();
+            if (!(!empty(\Yii::$app->params['performance']) && \Yii::$app->params['performance'] == true)) {
+                $this->refreshDashboard();
+                $this->updateDashboardDate();
+            }
         }
     }
 

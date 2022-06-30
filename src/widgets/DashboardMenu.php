@@ -23,11 +23,11 @@ use open20\amos\dashboard\assets\SubDashboardAsset;
  * Class SubDashboardFullsizeWidget
  * @package open20\amos\dashboard\widgets
  */
-class SubDashboardFullsizeWidget extends Widget
+class DashboardMenu extends Widget
 {
     public $model;
     public $module;
-    public $sub_dashboard     = 1;
+    public $sub_dashboard     = 0;
     public $widgets_type      = 'ICON';
     public $classDivGraphic   = '';
     public $graphicCustomSize = true;
@@ -39,9 +39,9 @@ class SubDashboardFullsizeWidget extends Widget
     {
         parent::init();
 
-        if (empty($this->model)) {
-            throw new \Exception(AmosDashboard::t('amosdashbaord', 'Missing model'));
-        }
+//        if (empty($this->model)) {
+//            throw new \Exception(AmosDashboard::t('amosdashbaord', 'Missing model'));
+//        }
     }
 
     /**
@@ -50,35 +50,22 @@ class SubDashboardFullsizeWidget extends Widget
     public function run()
     {
         $widgets = '';
-        if (empty($this->module)) {
-            $this->module = $this->getModule();
-            if (!empty($this->module)) {
-                if ($this->widgets_type == AmosWidgets::TYPE_ICON) {
-                    $widgets = AmosWidgetsSearch::selectableIcon($this->sub_dashboard, $this->module, true);
-                    if ($widgets->count()) {
-                        foreach ($widgets->all() as $value) {
-                            if ($value->classname != 'open20\amos\admin\widgets\icons\WidgetIconUserProfile' &&
-                                $value->classname != 'open20\amos\community\widgets\icons\WidgetIconCommunityDashboard' &&
-                                (
-                                    empty(\Yii::$app->params['isPoi']) || (!empty(\Yii::$app->params['isPoi']) && \Yii::$app->params['isPoi']
-                                        == false) || $this->model->className() != \open20\amos\community\models\Community::className()
-                                    || ($value->classname != \open20\amos\projectmanagement\widgets\icons\WidgetIconprojects::className()
-                                        /* && $value->classname !=  \open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard::className() */)
-                                    || ($value->classname == \open20\amos\projectmanagement\widgets\icons\WidgetIconprojects::className()
-                                        && ($this->model->id != 2751 && $this->model->id != 2754 && $this->model->id != 2750))
-                                    /* || ($value->classname ==  \open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard::className()
-                                      && ($this->model->id != 2751)) */
-                                )) {
-                                $widget = Yii::createObject($value->classname);
-                                echo $widget::widget();
-                            }
-                        }
-                    }
-                } else if ($this->widgets_type == AmosWidgets::TYPE_GRAPHIC) {
-                    $widgets = AmosWidgetsSearch::selectableGraphic($this->sub_dashboard, $this->module, true);
-                    $this->runHtml($widgets, AmosWidgets::TYPE_GRAPHIC);
+        $module  = \Yii::$app->controller->module;
+        $path    = \yii\helpers\Url::current();
+        $url     = explode('/', $path);
+
+        if ($this->widgets_type == AmosWidgets::TYPE_ICON) {
+            $widgets = AmosWidgetsSearch::selectableIcon();
+            if ($widgets->count()) {
+                foreach ($widgets->all() as $value) {
+                    $active = ($value->module == $url[1]) ? true : false;
+                    $widget = Yii::createObject($value->classname);
+                    echo $widget::widget(['active' => $active]);
                 }
             }
+        } else if ($this->widgets_type == AmosWidgets::TYPE_GRAPHIC) {
+            $widgets = AmosWidgetsSearch::selectableGraphic();
+            $this->runHtml($widgets, AmosWidgets::TYPE_GRAPHIC);
         }
     }
 

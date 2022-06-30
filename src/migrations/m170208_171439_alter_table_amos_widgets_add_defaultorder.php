@@ -31,7 +31,6 @@ class m170208_171439_alter_table_amos_widgets_add_defaultorder extends Migration
 
     /**
      * Use this instead of function up().
-     * @see \Yii\db\Migration::safeUp() for more info.
      */
     public function safeUp()
     {
@@ -48,7 +47,6 @@ class m170208_171439_alter_table_amos_widgets_add_defaultorder extends Migration
 
     /**
      * Use this instead of function down().
-     * @see \Yii\db\Migration::safeDown() for more info.
      */
     public function safeDown()
     {
