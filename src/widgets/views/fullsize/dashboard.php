@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <nav data-dashboard-index="<?= $currentDashboard->slide ?>">
     <div class="actions-dashboard-container">
-        <div class="container-custom">
+        <div class="<?= (Yii::$app->isCmsApplication())? 'container' : 'container-custom'?>">
             <div class="wrap-plugins row">
                 <?php Pjax::begin([
                     'id' => 'widget-icons-pjax-block',
