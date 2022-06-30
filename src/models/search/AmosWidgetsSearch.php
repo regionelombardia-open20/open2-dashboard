@@ -16,13 +16,13 @@ use yii\db\ActiveQuery;
 
 class AmosWidgetsSearch extends AmosWidgets
 {
-
     /**
-     *
-     * @param type $subDashboard
-     * @param type $module
-     * @param type $forceAll
+     * @param int $subDashboard
+     * @param string|null $module
+     * @param bool $forceAll
+     * @param bool $configureCommunityDashboard
      * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public static function selectableIcon($subDashboard = 0, $module = null, $forceAll = false, $configureCommunityDashboard = false)
     {
@@ -53,18 +53,18 @@ class AmosWidgetsSearch extends AmosWidgets
             }
         }
 
-        $selectable->orderBy('default_order ASC');
+        $selectable->orderBy(['default_order' => SORT_ASC]);
         return $selectable;
     }
-
+    
     /**
      * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public static function selectable()
     {
         $permissions = \Yii::$app->authManager->getPermissionsByUser(\Yii::$app->getUser()->getId());
         $modules = array_keys(\Yii::$app->getModules());
-
         
         $ret = parent::find()
             ->andWhere([
@@ -77,7 +77,6 @@ class AmosWidgetsSearch extends AmosWidgets
     }
 
     /**
-     *
      * @param string $type
      * @param boolean $checkPermission
      * @param string|null $module
@@ -118,14 +117,15 @@ class AmosWidgetsSearch extends AmosWidgets
 
         return $widgetsToShow;
     }
-
+    
     /**
-     *
-     * @param type $subDashboard
-     * @param type $module
-     * @param type $forceAll
+     * @param int $subDashboard
+     * @param string|null $module
+     * @param bool $forceAll
+     * @param bool $configureCommunityDashboard
      * @return ActiveQuery
-    */
+     * @throws \yii\base\InvalidConfigException
+     */
     public static function selectableGraphic($subDashboard = 0, $module = null, $forceAll = false, $configureCommunityDashboard = false)
     {
         $count = 0;
@@ -155,8 +155,7 @@ class AmosWidgetsSearch extends AmosWidgets
                 $selectable = $selectable->andWhere(['dashboard_visible' => 1]);
             }
         }
-        
-        $selectable->orderBy('default_order');
+        $selectable->orderBy(['default_order' => SORT_ASC]);
         return $selectable;
     }
 

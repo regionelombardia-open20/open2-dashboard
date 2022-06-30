@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Aria S.p.A.
  * OPEN 2.0
@@ -58,7 +57,8 @@ class SubDashboardWidget extends Widget
                     if ($widgets->count()) {
                         foreach ($widgets->all() as $value) {
                             if ($value->classname != 'open20\amos\admin\widgets\icons\WidgetIconUserProfile' &&
-                                $value->classname != 'open20\amos\community\widgets\icons\WidgetIconCommunityDashboard' &&
+                                $value->classname != 'open20\amos\community\widgets\icons\WidgetIconCommunityDashboard'
+                                &&
                                 (
                                 empty(\Yii::$app->params['isPoi']) || (!empty(\Yii::$app->params['isPoi']) && \Yii::$app->params['isPoi']
                                 == false) || $this->model->className() != '\open20\amos\community\models\Community'
@@ -66,8 +66,8 @@ class SubDashboardWidget extends Widget
                                 /* && $value->classname !=  '\open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard' */)
                                 || ( $value->classname == '\open20\amos\projectmanagement\widgets\icons\WidgetIconprojects'
                                 && ($this->model->id != 2751 && $this->model->id != 2754 && $this->model->id != 2750))
-                            /* || ($value->classname ==  '\open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard'
-                              && ($this->model->id != 2751)) */
+                                /* || ($value->classname ==  '\open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard'
+                                  && ($this->model->id != 2751)) */
                                 )) {
                                 $widget = Yii::createObject($value->classname);
                                 echo $widget::widget();
@@ -96,19 +96,18 @@ class SubDashboardWidget extends Widget
         if ($widgets->count()) {
             if ($this->graphicCustomSize) {
                 foreach ($widgets->all() as $value) {
-                    if($this->model->className() != '\open20\amos\community\models\Community'
-                                   || ($value->classname !=  '\open20\amos\documenti\widgets\graphics\WidgetGraphicsUltimiDocumenti')
-                                    || ($value->classname ==  '\open20\amos\documenti\widgets\graphics\WidgetGraphicsUltimiDocumenti'
-                                           && ($this->model->id != 2751)))
-                            {
-                               
+                    if ($this->model->className() != '\open20\amos\community\models\Community' || ($value->classname
+                        != '\open20\amos\documenti\widgets\graphics\WidgetGraphicsUltimiDocumenti') || ($value->classname
+                        == '\open20\amos\documenti\widgets\graphics\WidgetGraphicsUltimiDocumenti' && ($this->model->id
+                        != 2751))) {
+
                         $widgetGraphic = Yii::createObject($value->classname);
-                        if (empty($widgetGraphic->classFullSize)) {
+                        if (!empty($widgetGraphic->classFullSize)) {
                             array_unshift($showWidgets, $widgetGraphic);
                         } else {
                             $showWidgets[] = $widgetGraphic;
                         }
-                      }
+                    }
                 }
             }
             SubDashboardAsset::register(\Yii::$app->getView());
@@ -124,7 +123,7 @@ class SubDashboardWidget extends Widget
                         echo ' '.$widget->classFullSize;
                     }
                 }
-                echo '" '.
+                echo (($layoutModuleSet) ? '' : '" ').
                 ' data-code="'.$widget::classname().'" data-module-name="'.$widget->moduleName.'">'.$widget::widget().'</div>';
             }
             echo '</div>'.

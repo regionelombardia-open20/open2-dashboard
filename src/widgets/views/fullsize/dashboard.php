@@ -55,11 +55,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
  * @$widgetsGrafich elenco dei plugin ad grafici
  * @$dashboardsNumber numero delle dashboard da mostrare
  */
+
 ?>
+
+<?php $isLuyaApplication = get_class(\Yii::$app) == 'luya\web\Application';?>
 
 <nav data-dashboard-index="<?= $currentDashboard->slide ?>">
     <div class="actions-dashboard-container">
-        <div class="<?= (Yii::$app->isCmsApplication())? 'container' : 'container-custom'?>">
+        <div class="<?= ($isLuyaApplication && Yii::$app->isCmsApplication())? 'container' : 'container-custom'?>">
             <div class="wrap-plugins row">
                 <?php Pjax::begin([
                     'id' => 'widget-icons-pjax-block',

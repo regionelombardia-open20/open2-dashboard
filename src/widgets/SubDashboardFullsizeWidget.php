@@ -18,6 +18,7 @@ use open20\amos\dashboard\AmosDashboard;
 use open20\amos\dashboard\models\search\AmosWidgetsSearch;
 use open20\amos\dashboard\models\AmosWidgets;
 use open20\amos\dashboard\assets\SubDashboardAsset;
+use yii\db\ActiveQuery;
 
 /**
  * Class SubDashboardFullsizeWidget
@@ -58,16 +59,17 @@ class SubDashboardFullsizeWidget extends Widget
                     if ($widgets->count()) {
                         foreach ($widgets->all() as $value) {
                             if ($value->classname != 'open20\amos\admin\widgets\icons\WidgetIconUserProfile' &&
-                                $value->classname != 'open20\amos\community\widgets\icons\WidgetIconCommunityDashboard' &&
+                                $value->classname != 'open20\amos\community\widgets\icons\WidgetIconCommunityDashboard'
+                                &&
                                 (
-                                    empty(\Yii::$app->params['isPoi']) || (!empty(\Yii::$app->params['isPoi']) && \Yii::$app->params['isPoi']
-                                        == false) || $this->model->className() != \open20\amos\community\models\Community::className()
-                                    || ($value->classname != \open20\amos\projectmanagement\widgets\icons\WidgetIconprojects::className()
-                                        /* && $value->classname !=  \open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard::className() */)
-                                    || ($value->classname == \open20\amos\projectmanagement\widgets\icons\WidgetIconprojects::className()
-                                        && ($this->model->id != 2751 && $this->model->id != 2754 && $this->model->id != 2750))
-                                    /* || ($value->classname ==  \open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard::className()
-                                      && ($this->model->id != 2751)) */
+                                empty(\Yii::$app->params['isPoi']) || (!empty(\Yii::$app->params['isPoi']) && \Yii::$app->params['isPoi']
+                                == false) || $this->model->className() != \open20\amos\community\models\Community::className()
+                                || ($value->classname != \open20\amos\projectmanagement\widgets\icons\WidgetIconprojects::className()
+                                /* && $value->classname !=  \open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard::className() */)
+                                || ($value->classname == \open20\amos\projectmanagement\widgets\icons\WidgetIconprojects::className()
+                                && ($this->model->id != 2751 && $this->model->id != 2754 && $this->model->id != 2750))
+                                /* || ($value->classname ==  \open20\amos\documenti\widgets\icons\WidgetIconDocumentiDashboard::className()
+                                  && ($this->model->id != 2751)) */
                                 )) {
                                 $widget = Yii::createObject($value->classname);
                                 echo $widget::widget();
@@ -76,7 +78,7 @@ class SubDashboardFullsizeWidget extends Widget
                     }
                 } else if ($this->widgets_type == AmosWidgets::TYPE_GRAPHIC) {
                     $widgets = AmosWidgetsSearch::selectableGraphic($this->sub_dashboard, $this->module, true);
-                    $this->runHtml($widgets, AmosWidgets::TYPE_GRAPHIC);
+                    $this->runHtml($widgets);
                 }
             }
         }
@@ -84,7 +86,7 @@ class SubDashboardFullsizeWidget extends Widget
 
     /**
      * This method render the widget graphics
-     * @param type $widgets
+     * @param ActiveQuery $widgets
      */
     protected function runHtml($widgets)
     {
@@ -96,7 +98,7 @@ class SubDashboardFullsizeWidget extends Widget
             if ($this->graphicCustomSize) {
                 foreach ($widgets->all() as $value) {
                     $widgetGraphic = Yii::createObject($value->classname);
-                    if (empty($widgetGraphic->classFullSize)) {
+                    if (!empty($widgetGraphic->classFullSize)) {
                         array_unshift($showWidgets, $widgetGraphic);
                     } else {
                         $showWidgets[] = $widgetGraphic;
@@ -104,17 +106,7 @@ class SubDashboardFullsizeWidget extends Widget
                 }
             }
             SubDashboardAsset::register(\Yii::$app->getView());
-            \Yii::$app->getView()->registerJs("
-                if($('.grid').length) {
-                    $('.grid').masonry({
-                        itemSelector: '.grid-item',
-                        columnWidth: '.grid-sizer',
-                        percentPosition: true,
-                        columnWidth: '.grid-sizer',
-                        gutter: 10
-                    });
-                }
-                ", \yii\web\View::POS_READY);
+
             echo '<div id="bk-pluginGrafici" class="sub-dashboard-graphics wrap-graphic-widget">'.
             '<div id="widgets-graphic">';
             foreach ($showWidgets as $widget) {
@@ -124,7 +116,7 @@ class SubDashboardFullsizeWidget extends Widget
                         echo ' '.$widget->classFullSize;
                     }
                 }
-                echo '" '.
+                echo (($layoutModuleSet) ? '' : '" ').
                 ' data-code="'.$widget::classname().'" data-module-name="'.$widget->moduleName.'">'.$widget::widget().'</div>';
             }
             echo '</div>'.
@@ -162,7 +154,7 @@ class SubDashboardFullsizeWidget extends Widget
     }
 
     /**
-     * 
+     *
      * @param array $arr_model
      * @param array $modules
      * @return string|null
