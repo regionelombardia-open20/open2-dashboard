@@ -142,12 +142,12 @@ class SubDashboardFullsizeWidget extends Widget
                         $modules = \Yii::$app->getModule('dashboard')->modulesSubdashboard;
                         $module  = $this->getModuleByModel($modelArray, $modules);
                     } else {
-                        $module = $this->getModuleByApp($modelArray, $modules);
+                        $module = $this->getModuleByApp($modelArray);
                     }
                 }
             } catch (\Exception $e) {
                 $modelArray = explode('\\', $this->model->context);
-                $module     = $this->getModuleByModel($modelArray);
+                $module     = $this->getModuleByApp($modelArray);
             }
         }
         return $module;

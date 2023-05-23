@@ -155,7 +155,7 @@ class SubDashboardWidget extends Widget
                 }
             } catch (\Exception $e) {
                 $modelArray = explode('\\', $this->model->context);
-                $module     = $this->getModuleByModel($modelArray);
+                $module     = $this->getModuleByApp($modelArray);
             }
         }
         return $module;

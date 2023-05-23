@@ -56,9 +56,8 @@ $this->title = $this->context->module->name;
       $thisDashboardWidgets = $currentDashboard->amosWidgetsSelectedIcon;
 
       if ($thisDashboardWidgets && count($thisDashboardWidgets) > 0) {
-        foreach ($thisDashboardWidgets as $widget) {
-          $widgetObj = Yii::createObject($widget['classname']);
-          echo $widgetObj::widget();
+        foreach ($thisDashboardWidgets as $widget) {        
+          echo $widget['classname']::widget();
         }
       } else {
         AmosDashboard::tHtml('amosdashboard', 'Non ci sono widgets selezionati per questa dashboard');
@@ -84,7 +83,7 @@ $this->title = $this->context->module->name;
         ?>
           <div <?= (($layoutModuleSet) ? '' : 'class="grid-item' . ' ' . $widgetObj->classFullSize . '"') ?>
             data-code="<?= $widgetObj::classname() ?>"
-            data-module-name="<?= $widgetObj->moduleName ?>"><?= $widgetObj::widget(); ?></div>
+            data-module-name="<?= $widgetObj->moduleName ?>"><?= $widgetObj->getHmtl(); ?></div>
           <?php
           }
         }

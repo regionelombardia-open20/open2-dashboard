@@ -67,9 +67,8 @@ $layoutModuleSet = isset($moduleL);
 
                 if ($thisDashboardWidgets && count($thisDashboardWidgets) > 0) {
 
-                    foreach ($thisDashboardWidgets as $widget) {
-                        $widgetObj = Yii::createObject($widget['classname']);
-                        echo $widgetObj::widget();
+                    foreach ($thisDashboardWidgets as $widget) {                      
+                        echo $widget['classname']::widget();
                     }
                 } else {
                     AmosDashboard::tHtml('amosdashboard', 'Non ci sono widgets selezionati per questa dashboard');
@@ -94,7 +93,7 @@ $layoutModuleSet = isset($moduleL);
                 ?>
                 <div <?= (($layoutModuleSet) ? '' : 'class="' . $widgetObj->classFullSize . '"') ?>
                         data-code="<?= $widgetObj::classname() ?>"
-                        data-module-name="<?= $widgetObj->moduleName ?>"><?= $widgetObj::widget(); ?></div>
+                        data-module-name="<?= $widgetObj->moduleName ?>"><?= $widgetObj->getHtml(); ?></div>
                 <?php
             }
         }
@@ -108,9 +107,3 @@ $layoutModuleSet = isset($moduleL);
     'containerOptions' => ['class' => 'modal-utility modal-dashboard-2level'],
 ]);
 ?>
-
-
-
-
-
-
